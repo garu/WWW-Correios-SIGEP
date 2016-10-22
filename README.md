@@ -13,8 +13,8 @@ Este módulo permite uma integação fácil e rápida entre seu produto e a
 use WWW::Correios::SIGEP;
 
 my $correios = WWW::Correios::SIGEP->new(
-    usuario       => ...,
-    senha         => ...,
+    usuario => ...,
+    senha   => ...,
 );
 
 # consulta endereços por CEP
