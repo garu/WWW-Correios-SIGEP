@@ -8,12 +8,28 @@ sub new {
     $params = {} unless $params && ref $params eq 'HASH';
 
     if ($params->{sandbox}) {
-        $params->{target} = 'http://webservicescolhomologacao.correios.com.br/ScolWeb/WebServiceScol?wsdl';
-        $params->{wsdl_local_file} = 'sandbox/scol.wsdl';
+        $params->{target} = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl',
+
+        # na sandbox, Correios nos instruem a ignorar configurações do cliente e usar essas:
+        $params->{usuario} = 'empresacws';
+        $params->{senha}   = '123456';
+        # id correios: empresacws
+        # senha: 123456
+        # codigo administrativo: 08082650
+        # contrato: 9912208555
+        # codigo servico: 41076, 40380
+        # cartao: 0057018901
+        $params->{wsdl_local_file} = 'sandbox/logistica_reversa.wsdl';
+        $params->{ua_auth} = [
+            'apphom.correios.com.br:443',
+            'EJBWebServiceEndpointServlet Realm',
+            $params->{usuario},
+            $params->{senha},
+        ];
     }
     else {
-        $params->{target} = 'http://webservicescol.correios.com.br/ScolWeb/WebServiceScol?wsdl';
-        $params->{wsdl_local_file} = 'live/scol.wsdl';
+        $params->{target} = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+        $params->{wsdl_local_file} = 'live/logistica_reversa.wsdl';
     }
 
     WWW::Correios::SIGEP::Common::build_transport($params);
@@ -26,11 +42,7 @@ sub solicitar_postagem_reversa {
     return WWW::Correios::SIGEP::Common::call(
         $self,
         'solicitarPostagemReversa',
-        +{
-            usuario => $self->{usuario} || '',
-            senha   => $self->{senha}   || '',
-            %$params
-        }
+        $params,
     );
 }
 
@@ -167,8 +179,8 @@ Este método processa o pedido de autorização de postagem ou coleta nos
 Correios. Poderá ser efetuado até 50 solicitações simultâneas em uma única
 chamada, sendo uma lista de coletas_solicitadas.
 
-Consulte a documentação dos Correios para uma descrição de cada parâmetro,
-e se são obrigatórios ou opcionais.
+Consulte a L<documentação dos Correios|http://www2.correios.com.br/encomendas/servicosonline/Manual/Manual%20de%20Implementacao%20do%20Web%20Service%20Logistica%20Reversa.pdf>
+para uma descrição de cada parâmetro, e se são obrigatórios ou opcionais.
 
 Um exemplo de requisição válida (que pode ser testada na sandbox):
 
