@@ -21,7 +21,6 @@ sub process_return {
         $trace->printRequest;
         $trace->printResponse;
     }
-    use DDP; p $return;
     if (exists $return->{parameters}{return}) {
         return $return->{parameters}{return};
     }
