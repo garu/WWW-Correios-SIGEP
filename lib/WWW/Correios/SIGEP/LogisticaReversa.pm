@@ -8,28 +8,20 @@ sub new {
     $params = {} unless $params && ref $params eq 'HASH';
 
     if ($params->{sandbox}) {
-        $params->{target} = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl',
+        $params->{target} = 'http://webservicescolhomologacao.correios.com.br/ScolWeb/WebServiceScol?wsdl';
 
         # na sandbox, Correios nos instruem a ignorar configurações do cliente e usar essas:
-        $params->{usuario} = 'empresacws';
-        $params->{senha}   = '123456';
-        # id correios: empresacws
-        # senha: 123456
-        # codigo administrativo: 08082650
+        $params->{usuario} = '60618043';
+        $params->{senha}   = '8o8otn';
+        # cod_administrativo: 08082650
         # contrato: 9912208555
-        # codigo servico: 41076, 40380
+        # cod_servico: 41076
         # cartao: 0057018901
-        $params->{wsdl_local_file} = 'sandbox/logistica_reversa.wsdl';
-        $params->{ua_auth} = [
-            'apphom.correios.com.br:443',
-            'EJBWebServiceEndpointServlet Realm',
-            $params->{usuario},
-            $params->{senha},
-        ];
+        $params->{wsdl_local_file} = 'sandbox/scol.wsdl';
     }
     else {
-        $params->{target} = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
-        $params->{wsdl_local_file} = 'live/logistica_reversa.wsdl';
+        $params->{target} = 'http://webservicescol.correios.com.br/ScolWeb/WebServiceScol?wsdl';
+        $params->{wsdl_local_file} = 'live/scol.wsdl';
     }
 
     WWW::Correios::SIGEP::Common::build_transport($params);
@@ -179,7 +171,7 @@ Este método processa o pedido de autorização de postagem ou coleta nos
 Correios. Poderá ser efetuado até 50 solicitações simultâneas em uma única
 chamada, sendo uma lista de coletas_solicitadas.
 
-Consulte a L<documentação dos Correios|http://www2.correios.com.br/encomendas/servicosonline/Manual/Manual%20de%20Implementacao%20do%20Web%20Service%20Logistica%20Reversa.pdf>
+Consulte a L<documentação dos Correios|http://www.corporativo.correios.com.br/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEPWEB_Logistica_Reversa.pdf>
 para uma descrição de cada parâmetro, e se são obrigatórios ou opcionais.
 
 Um exemplo de requisição válida (que pode ser testada na sandbox):
@@ -192,35 +184,35 @@ Um exemplo de requisição válida (que pode ser testada na sandbox):
         codigo_servico    => '41076',
         cartao            => '0057018901',
         destinatario      => {
-            nome        => 'Museu de Arte Moderna',
-            logradouro  => 'Av. Infante Dom Henrique',
-            numero      => '85',
-            complemento => '2o andar',
-            bairro      => 'FLamengo',
-            cep         => '20021140',
-            cidade      => 'Rio de Janeiro',
-            uf          => 'RJ',
-            referencia  => 'dentro do Parque do Flamengo',
-            ddd         => '21',
-            telefone    => '2138835600',
+            nome        => 'Fulano',
+            logradouro  => 'Qd 301',
+            numero      => '10',
+            complemento => 'Residencial Central',
+            bairro      => 'Centro',
+            cep         => '70002900',
+            cidade      => 'Brasília',
+            uf          => 'DF',
+            referencia  => '',
+            ddd         => '61',
+            telefone    => '6133331234',
             email       => 'sigepdestinatario@mailinator.com',
         },
         coletas_solicitadas => {
-            id_cliente => '1234',
+            id_cliente => '102030',
             remetente => {
-                nome          => 'Inhotim',
-                logradouro    => 'Rua B',
-                numero        => '20',
-                complemento   => 'Sala 10',
+                nome          => 'Ciclano',
+                logradouro    => 'Rua João Negrão',
+                numero        => '1251',
+                complemento   => 'Bloco II',
                 bairro        => 'Centro',
-                cep           => '35460000',
-                cidade        => 'Brumadinho',
-                uf            => 'MG',
+                cep           => '80002900',
+                cidade        => 'Curitiba',
+                uf            => 'PR',
                 # email com número de postagem será enviado pelos Correios para:
                 email         => 'sigepremetente@mailinator.com',,
             },
-            tipo            => 'A',
-            valor_declarado => '399',
+            tipo            => 'A', # (A)utorização, (C)oleta, ou (CA) para ambos
+            valor_declarado => '399.00',
             ag              => '10',
             ar              => 0,
             obj_col         => { item => 1 },
