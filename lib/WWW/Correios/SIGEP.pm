@@ -2,6 +2,7 @@ package WWW::Correios::SIGEP;
 use strict;
 use warnings;
 use WWW::Correios::SIGEP::LogisticaReversa;
+use WWW::Correios::SIGEP::Common;
 
 our $VERSION = 0.01;
 
