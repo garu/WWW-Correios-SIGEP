@@ -1,6 +1,36 @@
 use strict;
 use warnings;
-use Test::More tests => 39;
+use Test::More;
+
+# ensure File::ShareDir finds our file first:
+use File::Temp;
+use File::Path;
+use File::Copy;
+my $tmp_dir = File::Temp::tempdir(CLEANUP => 1);
+my $basepath = File::Spec->catdir($tmp_dir, '/auto/share/dist/WWW-Correios-SIGEP');
+if (File::Path::mkpath(File::Spec->catdir($basepath, 'sandbox')) != 5) {
+    plan skip_all => 'could not create testable share dir for sandbox env';
+}
+elsif(File::Path::mkpath(File::Spec->catdir($basepath, 'live')) != 1) {
+    plan skip_all => 'could not create testable share dir for live env';
+}
+else {
+    plan tests => 39;
+}
+copy(
+    'share/sandbox/atende_cliente.wsdl',
+    File::Spec->catfile($basepath, 'sandbox/atende_cliente.wsdl')
+);
+copy(
+    'share/live/atende_cliente.wsdl',
+    File::Spec->catfile($basepath, 'live/atende_cliente.wsdl')
+);
+copy(
+    'share/sandbox/scol.wsdl',
+    File::Spec->catfile($basepath, 'sandbox/scol.wsdl')
+);
+unshift @INC, $tmp_dir;
+### end of File::ShareDir tweak
 
 use WWW::Correios::SIGEP;
 
