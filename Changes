@@ -1,5 +1,10 @@
 Revision history for WWW-Correios-SIGEP
 
+0.03 2018-12-09
+    - New public gera_xml_plp() method
+    - improved documentation
+    - removed leftover debug code (GH#1, Slaven Rezic)
+
 0.02 2018-05-29
     - Updated WSDL schemata
     - Updated sandbox credentials
