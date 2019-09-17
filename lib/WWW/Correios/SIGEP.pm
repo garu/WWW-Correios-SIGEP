@@ -4,7 +4,7 @@ use warnings;
 use WWW::Correios::SIGEP::LogisticaReversa;
 use WWW::Correios::SIGEP::Common;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 sub new {
     my ($class, $params) = @_;
