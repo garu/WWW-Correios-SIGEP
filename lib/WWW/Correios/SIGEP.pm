@@ -244,8 +244,8 @@ sub gera_xml_plp {
                         unless $valor_declarado >= 18.5 && $valor_declarado <= 10_000;
                 }
                 else {
-                    die "objetos[].codigo_postagem_sigla precisa ser SEDEX, PAC ou CARTA"
-                        unless $obj->{codigo_postagem_sigla} eq 'CARTA';
+                    die "objetos[].codigo_postagem_sigla ($obj->{codigo_postagem_sigla}) precisa ser SEDEX, PAC, CARTA ou MINI"
+                        unless $obj->{codigo_postagem_sigla} eq 'CARTA' || $obj->{codigo_postagem_sigla} eq 'MINI';
                 }
             }
             else {
