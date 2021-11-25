@@ -1,5 +1,8 @@
 Revision history for WWW-Correios-SIGEP
 
+0.06 2021-11-25
+    - fix valor_declarado for MINI
+
 0.05 2021-11-19
     - codigo_postagem_sigla may also be "MINI"
 
