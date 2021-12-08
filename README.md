@@ -7,7 +7,7 @@ de objetos, disponibilidade de serviços, SEDEX, logística reversa, entre
 muitos outros.
 
 Este módulo permite uma integação fácil e rápida entre seu produto e a 
-[API do SIGEP WEB](http://www.corporativo.correios.com.br/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEPWEB_Logistica_Reversa.pdf).
+[API do SIGEP WEB](https://www2.correios.com.br/sistemas/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEP_WEB.pdf) e sua [Logística Reversa](http://www.corporativo.correios.com.br/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEPWEB_Logistica_Reversa.pdf).
 
 ```perl
 use WWW::Correios::SIGEP;
